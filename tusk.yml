@@ -1,0 +1,16 @@
+tasks:
+  setup:
+    run:
+      - command: cargo install cargo-watch
+  dev:
+    run:
+      - command: cargo watch --watch ./rust -s "sh ./scripts/build.dev.sh"
+  check:dev:
+    run:
+      - command: cargo watch --watch ./rust -x "check"
+  build:prod:
+    run:
+      - command: sh ./scripts/build.prod.sh
+  jni:
+    run:
+      - command: sh ./scripts/gen.jni.sh

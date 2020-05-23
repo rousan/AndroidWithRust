@@ -1,0 +1,27 @@
+[package]
+name = "android-with-rust"
+publish = false
+version = "0.0.0"
+description = "An example Android app showing two-way communication bridge with Rust backed by Tokio.rs as worker."
+homepage = "https://github.com/rousan/AndroidWithRust"
+repository = "https://github.com/rousan/AndroidWithRust"
+keywords = ["android", "rust", "tokio-rs", "asynchronous"]
+authors = ["Rousan Ali <hello@rousan.io>"]
+readme = "README.md"
+license = "MIT"
+edition = "2018"
+
+[lib]
+name = "rust"
+crate-type = ["cdylib"]
+path="rust/lib.rs"
+
+[profile.release]
+lto = true
+
+[dependencies]
+log = "0.4"
+jni = "0.10"
+tokio = { version = "0.2", features = ["rt-threaded", "rt-core", "io-driver", "time"] }
+android_logger = "0.8"
+lazy_static = "1.4"

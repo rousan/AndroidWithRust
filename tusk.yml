@@ -14,3 +14,10 @@ tasks:
   jni:
     run:
       - command: sh ./scripts/gen.jni.sh
+  log:
+    run:
+      - command: tusk log:clear
+      - command: adb logcat -s "rust"
+  log:clear:
+    run:
+      - command: adb logcat -c

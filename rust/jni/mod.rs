@@ -1,28 +1,26 @@
 #![allow(non_snake_case)]
 
 use crate::worker;
-use jni::objects::{JObject, JString};
+use crate::worker::MessageData;
+use jni::objects::JObject;
+use jni::sys::jint;
 use jni::JNIEnv;
-use std::ffi::{CStr, CString};
 
 #[no_mangle]
-pub unsafe extern "C" fn Java_io_rousan_androidwithrust_worker_Worker_startRustWorker(_env: JNIEnv, _this: JObject) {
+pub unsafe extern "C" fn Java_io_rousan_androidwithrust_worker_Worker_startRustWorker(
+    _env: JNIEnv,
+    _jni_worker: JObject,
+) {
     worker::start_worker();
 }
 
 #[no_mangle]
 pub unsafe extern "C" fn Java_io_rousan_androidwithrust_worker_Worker_sendMessageToWorker(
     env: JNIEnv,
-    this: JObject,
-    what: JString,
-    data: JString,
+    jni_worker: JObject,
+    what: jint,
+    bundle: JObject,
 ) {
-    let what = convert_to_cstr(&env, what);
-    let data = convert_to_cstr(&env, data);
-
-    worker::handle_message(env, this, what, data);
-}
-
-pub fn convert_to_cstr(env: &JNIEnv, string: JString) -> CString {
-    unsafe { CString::from(CStr::from_ptr(env.get_string(string).unwrap().as_ptr())) }
+    let data = MessageData::wrap(&env, bundle);
+    worker::handle_message(env, jni_worker, what as i32, data);
 }

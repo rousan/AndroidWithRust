@@ -38,6 +38,8 @@ tusk jni
 
 Please refer to `tusk.yml` file for more commands.
 
-## Reference link
+## Reference links
 
 For more [info](https://medium.com/visly/rust-on-android-19f34a2fb43).
+
+1. https://stackoverflow.com/questions/28780623/sending-jbyte-array-to-java-method-failed-using-jni

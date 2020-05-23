@@ -1,46 +1,37 @@
 package io.rousan.androidwithrust;
 
 import androidx.appcompat.app.AppCompatActivity;
-import io.rousan.androidwithrust.bridge.Bridge;
-import io.rousan.androidwithrust.bridge.EventData;
-import io.rousan.androidwithrust.bridge.OnEventListener;
+import io.rousan.androidwithrust.worker.Worker;
 
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
-    private Bridge bridge;
+    private Worker worker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initialize_bridge();
+        initWorker();
 
         this.findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EventData data = new EventData();
-                data.putString("msg", "Hello");
-
-                MainActivity.this.bridge.emit("ping", data);
+                worker.sendMessage("ping", "hello");
             }
         });
     }
 
-    private void initialize_bridge() {
-        Bridge bridge = new Bridge(this);
-
-        bridge.on("ping", new OnEventListener() {
+    private void initWorker() {
+        this.worker = new Worker(this, new Worker.OnMessageListener() {
             @Override
-            public void onEvent(EventData data) {
-                Log.d("rust", String.format("Java: Fired ping event with message: %s", data.getString("msg")));
+            public void onMessage(String what, String data) {
+                Log.d("rust", String.format("From java, what: %s, data: %s", what, data));
             }
         });
 
-        this.bridge = bridge;
-
-        this.bridge.initiate();
+        this.worker.start();
     }
 }

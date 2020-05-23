@@ -260,5 +260,6 @@ fabric.properties
 .env
 /dist
 .halt.releez.yml
+app/libs/
 
 # End of https://www.gitignore.io/api/rust,java,macos,android,androidstudio

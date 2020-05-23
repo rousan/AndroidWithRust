@@ -1,3 +1,5 @@
+#![allow(non_snake_case)]
+
 use crate::worker;
 use jni::objects::{JObject, JString};
 use jni::JNIEnv;

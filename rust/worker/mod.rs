@@ -20,6 +20,7 @@ pub fn start_worker() {
 
 pub fn handle_message(jni_env: JNIEnv, jni_worker: JObject, what: CString, data: CString) {
     let jvm = jni_env.get_java_vm().unwrap();
+
     let jni_worker = jni_env.new_global_ref(jni_worker).unwrap();
 
     runtime::spawn(async move {
@@ -58,5 +59,6 @@ pub async fn on_message(what: &str, data: &str) -> (String, String) {
         std::thread::current().id()
     );
 
-    ("noop".to_owned(), "noop2".to_owned())
+    // reply message
+    ("noop".to_owned(), "noop233".to_owned())
 }

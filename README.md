@@ -1,6 +1,7 @@
 # Android with Rust
 
-An example Android app showing two-way communication bridge with Rust backed by Tokio.rs as worker which makes it possible to write async Rust code.
+An example Android app showing how to create a two-way communication bridge with Rust backed by [Tokio.rs](https://tokio.rs/) as worker.
+It uses an event-based/pub-sub approach to communicate and it processes the events in a [Tokio.rs](https://tokio.rs/) runtime and allows to write async Rust code for better performance.
 
 ## Requirements
 

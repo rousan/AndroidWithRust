@@ -3,6 +3,10 @@ package io.rousan.androidwithrust.worker;
 import android.os.Bundle;
 
 public class MessageData {
+    public static MessageData empty() {
+        return new MessageData();
+    }
+
     Bundle bundle;
 
     public MessageData() {

@@ -1,6 +1,7 @@
-package io.rousan.androidwithrust;
+package io.rousan.androidwithrust.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import io.rousan.androidwithrust.R;
 import io.rousan.androidwithrust.worker.MessageData;
 import io.rousan.androidwithrust.worker.Worker;
 
@@ -20,10 +21,7 @@ public class MainActivity extends AppCompatActivity {
         this.findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MessageData data = new MessageData();
-                data.putString("key", "hello: 象形字 ");
-
-                worker.sendMessage(100, data);
+                worker.sendMessage(Message.PING, MessageData.empty());
             }
         });
     }
@@ -32,11 +30,20 @@ public class MainActivity extends AppCompatActivity {
         this.worker = new Worker(this, new Worker.OnMessageListener() {
             @Override
             public void onMessage(int what, MessageData data) {
-                Log.d("rust", String.format("From java, what: %d, data: %s", what, data.getString("key")));
-                Log.d("rust", String.format("From java2, what: %d, data: %s", what, data.getString("key2")));
+                MainActivity.this.onMessage(what, data);
             }
         });
 
         this.worker.start();
+    }
+
+    private void onMessage(int what, MessageData data) {
+        Log.d("my-app", String.format("Java: Got a message: what: %d", what));
+
+        switch (what) {
+            case Message.PONG: {
+                Log.d("my-app", "Java: Got pong reply from Rust end");
+            }
+        }
     }
 }

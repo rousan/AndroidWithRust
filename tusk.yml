@@ -17,7 +17,7 @@ tasks:
   log:
     run:
       - command: tusk log:clear
-      - command: adb logcat -s "rust"
+      - command: adb logcat -s "my-app"
   log:clear:
     run:
       - command: adb logcat -c

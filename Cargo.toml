@@ -26,3 +26,4 @@ tokio = { version = "0.2", features = ["rt-threaded", "rt-core", "io-driver", "t
 android_logger = "0.8"
 lazy_static = "1.4"
 sendify = "1.1"
+num_cpus = "1.13.0"

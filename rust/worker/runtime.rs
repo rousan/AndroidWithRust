@@ -14,7 +14,7 @@ lazy_static! {
 
 pub fn start_tokio_runtime() {
     info!(
-        "Starting tokio runtime from thread id: {:?}",
+        "Rust: Starting tokio runtime from thread id: {:?}",
         std::thread::current().id()
     );
     lazy_static::initialize(&TOKIO_RUNTIME);

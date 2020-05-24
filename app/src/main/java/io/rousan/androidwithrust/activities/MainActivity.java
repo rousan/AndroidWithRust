@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         this.findViewById(R.id.btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                worker.sendMessage(Message.PING, MessageData.empty());
+                worker.sendMessage(MessageWhat.PING, MessageData.empty());
             }
         });
     }
@@ -38,10 +38,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void onMessage(int what, MessageData data) {
-        Log.d("my-app", String.format("Java: Got a message: what: %d", what));
+        Log.d("my-app", String.format("Java: Got a message: what: %s", MessageWhat.toString(what)));
 
         switch (what) {
-            case Message.PONG: {
+            case MessageWhat.PONG: {
                 Log.d("my-app", "Java: Got pong reply from Rust end");
             }
         }

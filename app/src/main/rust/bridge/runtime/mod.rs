@@ -1,3 +1,4 @@
+use crate::bridge::ext::JavaVMExt;
 use std::future::Future;
 use tokio::runtime::Runtime;
 use tokio::task::JoinHandle;
@@ -21,6 +22,12 @@ pub fn start_runtime() {
                 .core_threads(runtime_core_threads_count())
                 .on_thread_start(|| {
                     info!("Tokio worker thread started: {:?}", std::thread::current().id());
+
+                    info!(
+                        "Attaching Tokio worker thread with JVM: {:?}",
+                        std::thread::current().id()
+                    );
+                    crate::bridge::jvm().attach_thread();
                 })
                 .on_thread_stop(|| {
                     info!("Tokio worker thread stopped: {:?}", std::thread::current().id());

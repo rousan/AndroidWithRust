@@ -30,6 +30,11 @@ impl MessageData {
         MessageData::new()
     }
 
+    /// Drops the internal `GlobalRef` after attaching the current thread to the JVM.
+    pub fn drop(self) {
+        crate::bridge::jvm().attach_thread();
+    }
+
     pub fn put_string<K: AsRef<str>, V: AsRef<str>>(self, key: K, value: V) -> Self {
         let env = crate::bridge::jvm().env();
 

@@ -13,7 +13,7 @@ public class MessageData {
         this.bundle = new Bundle();
     }
 
-    MessageData(Bundle bundle) {
+    public MessageData(Bundle bundle) {
         this.bundle = bundle;
     }
 

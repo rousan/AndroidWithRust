@@ -4,10 +4,10 @@ tasks:
       - command: cargo install cargo-watch
   dev:
     run:
-      - command: cargo watch --watch ./rust -s "sh ./scripts/build.dev.sh"
+      - command: cargo watch --watch ./app/src/main/rust -s "sh ./scripts/build.dev.sh"
   check:dev:
     run:
-      - command: cargo watch --watch ./rust -x "check"
+      - command: cargo watch --watch ./app/src/main/rust -x "check"
   build:prod:
     run:
       - command: sh ./scripts/build.prod.sh

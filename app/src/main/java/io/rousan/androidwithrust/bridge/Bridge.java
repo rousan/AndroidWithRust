@@ -1,10 +1,10 @@
-package io.rousan.androidwithrust.worker;
+package io.rousan.androidwithrust.bridge;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 
-public class Worker {
+public class Bridge {
     static {
         System.loadLibrary("rust");
     }
@@ -12,22 +12,28 @@ public class Worker {
     private Context context;
     private OnMessageListener listener;
 
-    public Worker(Context context, OnMessageListener listener) {
+    public Bridge(Context context, OnMessageListener listener) {
         this.context = context;
         this.listener = listener;
     }
 
     public void start() {
-        this.startRustWorker();
+        this.startNativeBridge();
+    }
+
+    public void shutdown() {
+        this.shutdownNativeBridge();
     }
 
     public void sendMessage(int what, MessageData data) {
-        this.sendMessageToWorker(what, data.bundle);
+        this.sendMessageToNativeBridge(what, data.bundle);
     }
 
-    private native void startRustWorker();
+    private native void startNativeBridge();
 
-    private native void sendMessageToWorker(int what, Bundle bundle);
+    private native void shutdownNativeBridge();
+
+    private native void sendMessageToNativeBridge(int what, Bundle bundle);
 
     // It will be called from the Rust end to send a message to Java end.
     private void sendMessageToJava(final int what, final Bundle bundle) {

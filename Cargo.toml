@@ -2,7 +2,7 @@
 name = "android-with-rust"
 publish = false
 version = "0.0.0"
-description = "An example app showing how to integrate Rust Tokio.rs runtime as worker to run async rust code in Android for better performance."
+description = "An example app showing the integration of Rust Tokio.rs with Android and it uses event-based bridge for two-way communication."
 homepage = "https://github.com/rousan/AndroidWithRust"
 repository = "https://github.com/rousan/AndroidWithRust"
 keywords = ["android", "rust", "tokio-rs", "asynchronous"]
@@ -14,7 +14,7 @@ edition = "2018"
 [lib]
 name = "rust"
 crate-type = ["cdylib"]
-path="rust/lib.rs"
+path="app/src/main/rust/lib.rs"
 
 [profile.release]
 lto = true
@@ -22,7 +22,7 @@ lto = true
 [dependencies]
 log = "0.4"
 jni = "0.16"
-tokio = { version = "0.2", features = ["rt-threaded", "rt-core", "io-driver", "time", "fs"] }
+tokio = { version = "0.2", features = ["rt-threaded", "rt-core", "io-driver", "time", "fs", "net", "tcp", "io-util", "stream"] }
 android_logger = "0.8"
 lazy_static = "1.4"
 sendify = "1.1"

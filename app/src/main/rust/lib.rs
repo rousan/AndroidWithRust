@@ -1,17 +1,14 @@
 #![cfg(target_os = "android")]
 
-#[macro_use]
-extern crate log;
-
 pub use error::{Error, ErrorExt, ResultExt};
 
-mod error;
-mod ext;
-mod helpers;
-mod jni;
+#[macro_use]
 mod logger;
+
+mod bridge;
+mod error;
 mod message;
 mod prelude;
-mod worker;
+mod transfer;
 
 pub type Result<T> = std::result::Result<T, Error>;

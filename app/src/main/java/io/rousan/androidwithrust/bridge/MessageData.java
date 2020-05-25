@@ -1,4 +1,4 @@
-package io.rousan.androidwithrust.worker;
+package io.rousan.androidwithrust.bridge;
 
 import android.os.Bundle;
 

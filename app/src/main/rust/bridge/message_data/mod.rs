@@ -1,4 +1,5 @@
-use crate::helpers;
+use crate::bridge::ext::JavaVMExt;
+use crate::ResultExt;
 use jni::objects::{JObject, JString};
 use jni::{
     objects::{GlobalRef, JValue},
@@ -10,8 +11,10 @@ pub struct MessageData {
 }
 
 impl MessageData {
-    pub fn new(env: &JNIEnv) -> MessageData {
+    pub fn new() -> MessageData {
+        let env = crate::bridge::jvm().env();
         let bundle = env.new_object("android/os/Bundle", "()V", &[]).unwrap();
+
         MessageData {
             inner: env.new_global_ref(bundle).unwrap(),
         }
@@ -23,11 +26,13 @@ impl MessageData {
         }
     }
 
-    pub fn empty(env: &JNIEnv) -> MessageData {
-        MessageData::new(env)
+    pub fn empty() -> MessageData {
+        MessageData::new()
     }
 
-    pub fn put_string<K: AsRef<str>, V: AsRef<str>>(self, env: &JNIEnv, key: K, value: V) -> Self {
+    pub fn put_string<K: AsRef<str>, V: AsRef<str>>(self, key: K, value: V) -> Self {
+        let env = crate::bridge::jvm().env();
+
         env.call_method(
             &self.inner,
             "putString",
@@ -42,7 +47,9 @@ impl MessageData {
         self
     }
 
-    pub fn get_string<K: AsRef<str>>(&self, env: &JNIEnv, key: K) -> Option<String> {
+    pub fn get_string<K: AsRef<str>>(&self, key: K) -> Option<String> {
+        let env = crate::bridge::jvm().env();
+
         let value = env
             .call_method(
                 &self.inner,
@@ -53,7 +60,7 @@ impl MessageData {
             .unwrap();
 
         match value {
-            JValue::Object(obj) => match helpers::convert_java_string_to_rust_string(&env, JString::from(obj)) {
+            JValue::Object(obj) => match Self::convert_java_string_to_rust_string(&env, JString::from(obj)) {
                 Ok(s) => Some(s),
                 Err(err) => {
                     warn!("{}", err);
@@ -66,5 +73,13 @@ impl MessageData {
 
     pub fn bundle(self) -> GlobalRef {
         self.inner
+    }
+
+    fn convert_java_string_to_rust_string(env: &JNIEnv, j_string: JString) -> crate::Result<String> {
+        let j_string = env
+            .get_string(j_string)
+            .context("Couldn't convert java script to rust string")?;
+
+        Ok(String::from(j_string.to_owned()))
     }
 }

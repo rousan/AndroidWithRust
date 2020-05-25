@@ -8,7 +8,7 @@ pub async fn on_start() {
     bridge::send_message(2000, MessageData::empty());
 }
 
-/// Calls when a message is received from Java end.
+/// Calls when a message is received from the Java end.
 pub async fn on_message(what: i32, _data: MessageData) {
     info!(
         "Got a message: what: {}, thread: {:?}",

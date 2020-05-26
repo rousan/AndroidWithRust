@@ -1,20 +1,16 @@
-pub const PING: i32 = 10;
-pub const PONG: i32 = 11;
-pub const SUCCESS: i32 = 12;
-pub const ERROR: i32 = 13;
-pub const NOOP: i32 = 14;
-
-pub const FILE_WRITE: i32 = 20;
+pub const SERVER_STARTED: i32 = 0;
+pub const INIT_DATA: i32 = 1;
+pub const SEND_FILE: i32 = 2;
+pub const SEND_FILE_PROGRESS: i32 = 3;
+pub const SEND_FILE_DONE: i32 = 4;
 
 pub fn to_string(what: i32) -> &'static str {
     match what {
-        PING => "PING",
-        PONG => "PONG",
-        SUCCESS => "SUCCESS",
-        ERROR => "ERROR",
-        NOOP => "NOOP",
-
-        FILE_WRITE => "FILE_WRITE",
+        SERVER_STARTED => "SERVER_STARTED",
+        INIT_DATA => "INIT_DATA",
+        SEND_FILE => "SEND_FILE",
+        SEND_FILE_PROGRESS => "SEND_FILE_PROGRESS",
+        SEND_FILE_DONE => "SEND_FILE_DONE",
         _ => "<UNKNOWN>",
     }
 }

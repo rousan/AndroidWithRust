@@ -3,9 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="50dp"
+    android:paddingLeft="50dp"
+    android:paddingRight="50dp"
+    android:paddingBottom="50dp"
+    android:paddingTop="10dp"
     android:orientation="vertical"
     tools:context=".activities.MainActivity">
+
+    <TextView
+        android:id="@+id/tv_ip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="IP: 127.0.0.1"
+        android:textSize="15dp"
+        android:layout_marginBottom="15dp"
+        android:textStyle="bold"/>
 
     <EditText
         android:id="@+id/inpt_ip"

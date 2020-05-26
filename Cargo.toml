@@ -22,7 +22,7 @@ lto = true
 [dependencies]
 log = "0.4"
 jni = "0.16"
-tokio = { version = "0.2", features = ["rt-threaded", "rt-core", "io-driver", "time", "fs", "net", "tcp", "io-util", "stream"] }
+tokio = { version = "0.2", features = ["rt-threaded", "rt-core", "io-driver", "time", "fs", "net", "tcp", "io-util", "stream", "blocking"] }
 android_logger = "0.8"
 lazy_static = "1.4"
 sendify = "1.1"

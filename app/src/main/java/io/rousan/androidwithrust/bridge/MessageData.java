@@ -24,4 +24,8 @@ public class MessageData {
     public String getString(String key) {
         return this.bundle.getString(key);
     }
+
+    public Bundle getData() {
+        return bundle;
+    }
 }

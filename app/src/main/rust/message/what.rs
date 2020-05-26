@@ -1,16 +1,14 @@
-pub const SERVER_STARTED: i32 = 0;
-pub const INIT_DATA: i32 = 1;
-pub const SEND_FILE: i32 = 2;
-pub const SEND_FILE_PROGRESS: i32 = 3;
-pub const SEND_FILE_DONE: i32 = 4;
+pub const INITIATE: i32 = 0;
+pub const COUNTER_VALUE: i32 = 1;
+pub const INCREASE_COUNTER: i32 = 2;
+pub const DECREASE_COUNTER: i32 = 3;
 
 pub fn to_string(what: i32) -> &'static str {
     match what {
-        SERVER_STARTED => "SERVER_STARTED",
-        INIT_DATA => "INIT_DATA",
-        SEND_FILE => "SEND_FILE",
-        SEND_FILE_PROGRESS => "SEND_FILE_PROGRESS",
-        SEND_FILE_DONE => "SEND_FILE_DONE",
+        INITIATE => "INITIATE",
+        COUNTER_VALUE => "COUNTER_VALUE",
+        INCREASE_COUNTER => "INCREASE_COUNTER",
+        DECREASE_COUNTER => "DECREASE_COUNTER",
         _ => "<UNKNOWN>",
     }
 }

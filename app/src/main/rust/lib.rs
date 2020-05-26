@@ -6,9 +6,9 @@ pub use error::{Error, ErrorExt, ResultExt};
 mod logger;
 
 mod bridge;
+mod counter;
 mod error;
 mod message;
 mod prelude;
-mod transfer;
 
 pub type Result<T> = std::result::Result<T, Error>;

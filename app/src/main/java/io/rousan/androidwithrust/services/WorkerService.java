@@ -8,12 +8,9 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 
-import java.io.IOException;
-
 import io.rousan.androidwithrust.activities.MainActivity;
-import io.rousan.androidwithrust.bridge.MessageData;
 import io.rousan.androidwithrust.bridge.Bridge;
-import io.rousan.androidwithrust.message.What;
+import io.rousan.androidwithrust.bridge.MessageData;
 import io.rousan.androidwithrust.utils.Utils;
 
 public class WorkerService extends Service {
@@ -25,17 +22,6 @@ public class WorkerService extends Service {
         this.bridge = new Bridge(this, new Bridge.OnMessageListener() {
             @Override
             public void onMessage(int what, MessageData data) {
-                if (what == What.SERVER_STARTED) {
-                    try {
-                        MessageData init_data = new MessageData();
-                        init_data.putString("output_path", getExternalFilesDir(null).getCanonicalPath());
-                        sendMessage(What.INIT_DATA, init_data);
-                        return;
-                    } catch (Exception exp) {
-                        Utils.log(exp);
-                    }
-                }
-
                 if (sendMessenger != null) {
                     Message message = Message.obtain(null, what);
                     message.setData(data.getData());
@@ -88,10 +74,6 @@ public class WorkerService extends Service {
         super.onDestroy();
         Utils.log("Worker Service destroyed");
         this.bridge.shutdown();
-    }
-
-    public void sendMessage(int what, MessageData data) {
-        this.bridge.sendMessage(what, data);
     }
 
     public static class IncomingHandler extends Handler {

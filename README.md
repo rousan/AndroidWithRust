@@ -1,7 +1,7 @@
 # Android with Rust
 
-An example app showing the integration of Rust [Tokio.rs](https://tokio.rs/) with `Android` and it uses event-based bridge for two-way communication. It allows you
-to write async rust code (thanks to [Tokio.rs](https://tokio.rs/) runtime) in `Android` for better performance.
+An example app showing the integration of Rust [Tokio.rs](https://tokio.rs/) with `Android` and it uses an event-based bridge for `two-way communication`. It allows you
+to write async rust code (thanks to [Tokio.rs](https://tokio.rs/) runtime) in `Android` for better performance and it can also be used as a worker alternative of `Java thread pool`.
 
 It creates a bridge wrapper between `Java` and `Rust` environment so that you don't have to deal with [`jni-rs`](https://github.com/jni-rs/jni-rs/) frequently.
 

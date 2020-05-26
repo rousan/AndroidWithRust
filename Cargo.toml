@@ -2,7 +2,7 @@
 name = "android-with-rust"
 publish = false
 version = "0.0.0"
-description = "An example app showing the integration of Rust Tokio.rs with Android and it uses event-based bridge for two-way communication."
+description = "An example app showing the integration of Rust Tokio.rs with Android and it uses an event-based bridge for two-way communication."
 homepage = "https://github.com/rousan/AndroidWithRust"
 repository = "https://github.com/rousan/AndroidWithRust"
 keywords = ["android", "rust", "tokio-rs", "asynchronous"]

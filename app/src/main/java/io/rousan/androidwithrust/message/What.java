@@ -1,28 +1,24 @@
 package io.rousan.androidwithrust.message;
 
 public final class What {
-    public final static int SERVER_STARTED = 0;
-    public final static int INIT_DATA = 1;
-    public final static int SEND_FILE = 2;
-    public final static int SEND_FILE_PROGRESS = 3;
-    public final static int SEND_FILE_DONE = 4;
+    public final static int INITIATE = 0;
+    public final static int COUNTER_VALUE = 1;
+    public final static int INCREASE_COUNTER = 2;
+    public final static int DECREASE_COUNTER = 3;
 
     public static String toString(int what) {
         switch (what) {
-            case SERVER_STARTED: {
-                return "SERVER_STARTED";
+            case INITIATE: {
+                return "INITIATE";
             }
-            case INIT_DATA: {
-                return "INIT_DATA";
+            case COUNTER_VALUE: {
+                return "COUNTER_VALUE";
             }
-            case SEND_FILE: {
-                return "SEND_FILE";
+            case INCREASE_COUNTER: {
+                return "INCREASE_COUNTER";
             }
-            case SEND_FILE_PROGRESS: {
-                return "SEND_FILE_PROGRESS";
-            }
-            case SEND_FILE_DONE: {
-                return "SEND_FILE_DONE";
+            case DECREASE_COUNTER: {
+                return "DECREASE_COUNTER";
             }
             default: {
                 return "<UNKNOWN>";

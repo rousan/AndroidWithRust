@@ -1,20 +1,10 @@
 package io.rousan.androidwithrust.activities;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import io.rousan.androidwithrust.R;
-import io.rousan.androidwithrust.bridge.MessageData;
-import io.rousan.androidwithrust.message.What;
-import io.rousan.androidwithrust.services.WorkerService;
-import io.rousan.androidwithrust.utils.Utils;
-
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
@@ -23,19 +13,19 @@ import android.os.RemoteException;
 import android.view.View;
 import android.widget.TextView;
 
-import com.obsez.android.lib.filechooser.ChooserDialog;
-
-import java.io.File;
+import androidx.appcompat.app.AppCompatActivity;
+import io.rousan.androidwithrust.R;
+import io.rousan.androidwithrust.bridge.MessageData;
+import io.rousan.androidwithrust.message.What;
+import io.rousan.androidwithrust.services.WorkerService;
+import io.rousan.androidwithrust.utils.Utils;
 
 public class MainActivity extends AppCompatActivity {
     public static final int WHAT_SET_REPLY_MESSENGER = Integer.MAX_VALUE;
-    public static final int CHOOSE_FILE_REQUEST_CODE = 100;
 
     private boolean isBoundWithService;
     private Messenger sendMessenger;
     private Messenger receiveMessenger;
-
-    private String chose_file_path;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,48 +34,23 @@ public class MainActivity extends AppCompatActivity {
 
         startService(new Intent(this, WorkerService.class));
         bindService(new Intent(this, WorkerService.class), serviceConnection, Context.BIND_AUTO_CREATE);
-
-        TextView tv = (TextView) findViewById(R.id.tv_ip);
-        tv.setText(String.format("IP: %s", Utils.getIPAddress(true)));
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        unbindService(serviceConnection);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == CHOOSE_FILE_REQUEST_CODE) {
-            String path = data.getData().getPath();
-            Utils.log("Choosen file: " + path);
-            this.chose_file_path = path;
-        }
-    }
-
-    public void onChooseButtonClick(View v) {
-        Utils.log("Choose clicked");
-
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType("file/*");
-        startActivityForResult(intent, CHOOSE_FILE_REQUEST_CODE);
-    }
-
-    public void onSendButtonClick(View v) {
-        Utils.log("Send clicked");
-
-        MessageData data = new MessageData();
-        data.putString("ip", "192.168.0.109");
-        data.putString("path", chose_file_path);
-
-        sendMessage(What.SEND_FILE, data);
     }
 
     public void onBridgeMessage(int what, MessageData data) {
         Utils.log(String.format("Got a message: what: %s", What.toString(what)));
+
+        switch (what) {
+            case What.COUNTER_VALUE: {
+                final String counter_value = data.getString("value");
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        TextView tv = (TextView)findViewById(R.id.tv_counter_val);
+                        tv.setText(counter_value);
+                    }
+                });
+            }
+        }
     }
 
     public void sendMessage(int what, MessageData data) {
@@ -99,6 +64,14 @@ public class MainActivity extends AppCompatActivity {
                 Utils.log(exp);
             }
         }
+    }
+
+    public void onIncreaseButtonClick(View v) {
+        sendMessage(What.INCREASE_COUNTER, MessageData.empty());
+    }
+
+    public void onDecreaseButtonClick(View v) {
+        sendMessage(What.DECREASE_COUNTER, MessageData.empty());
     }
 
     private ServiceConnection serviceConnection = new ServiceConnection() {
@@ -117,6 +90,8 @@ public class MainActivity extends AppCompatActivity {
             } catch (RemoteException exp) {
                 Utils.log(exp);
             }
+
+            sendMessage(What.INITIATE, MessageData.empty());
         }
 
         @Override
@@ -140,5 +115,11 @@ public class MainActivity extends AppCompatActivity {
         public void handleMessage(Message msg) {
             mainActivity.onBridgeMessage(msg.what, new MessageData(msg.getData()));
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbindService(serviceConnection);
     }
 }

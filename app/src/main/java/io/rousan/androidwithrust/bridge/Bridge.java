@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 
+import io.rousan.androidwithrust.utils.Utils;
+
 public class Bridge {
     static {
         System.loadLibrary("rust");
@@ -41,6 +43,7 @@ public class Bridge {
         handler.post(new Runnable() {
             @Override
             public void run() {
+                Utils.log("Main thread: " + Thread.currentThread().getId());
                 listener.onMessage(what, new MessageData(bundle));
             }
         });
